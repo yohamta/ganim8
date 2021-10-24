@@ -186,7 +186,7 @@ func seekFrameIndex(intervals []time.Duration, timer time.Duration) int {
 
 // Update updates the animation.
 func (anim *Animation) Update(elapsedTime time.Duration) {
-	if anim.status != Playing {
+	if anim.status != Playing || len(anim.frames) <= 1 {
 		return
 	}
 	anim.timer += elapsedTime

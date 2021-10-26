@@ -2,7 +2,7 @@
 
 ganim8 is an Animation library for [Ebiten](https://ebiten.org/) which is a golang version of [anim8](https://github.com/kikito/anim8).
 
-[GoDoc](https://pkg.go.dev/github.com/miyahoyo/ganim8)
+[GoDoc](https://pkg.go.dev/github.com/yohamta/ganim8)
 
 ## Example
 
@@ -121,14 +121,14 @@ func (g *Game) Update() error {
 }
 ```
 
-[source code](https://github.com/miyahoyo/ganim8/blob/master/examples/simple/main.go)
+[source code](https://github.com/yohamta/ganim8/blob/master/examples/simple/main.go)
 
 ### Output
 
 <p align="center">
-  <img src="https://github.com/miyahoyo/ganim8/blob/master/examples/gif/example.gif?raw=true" />
+  <img src="https://github.com/yohamta/ganim8/blob/master/examples/gif/example.gif?raw=true" />
 </p>
 
 ### The texture used in the example
 
-  <img src="https://github.com/miyahoyo/ganim8/blob/master/examples/assets/images/Character_Monster_Slime_Blue.png?raw=true" />
+  <img src="https://github.com/yohamta/ganim8/blob/master/examples/assets/images/Character_Monster_Slime_Blue.png?raw=true" />

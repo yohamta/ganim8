@@ -9,8 +9,8 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 
-	"github.com/miyahoyo/ganim8"
-	"github.com/miyahoyo/ganim8/examples/assets/images"
+	"github.com/yohamta/ganim8"
+	"github.com/yohamta/ganim8/examples/assets/images"
 )
 
 const (

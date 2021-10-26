@@ -4,7 +4,7 @@ import (
 	"image"
 	"testing"
 
-	"github.com/miyahoyo/ganim8"
+	"github.com/yohamta/ganim8"
 )
 
 func assertEqualRect(a, b *image.Rectangle) bool {

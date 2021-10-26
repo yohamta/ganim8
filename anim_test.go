@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/miyahoyo/ganim8"
+	"github.com/yohamta/ganim8"
 )
 
 func mockFrames(n int) []*image.Rectangle {

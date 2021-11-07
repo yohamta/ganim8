@@ -10,6 +10,8 @@ ganim8 is an Animation library for [Ebiten](https://ebiten.org/).
 ## Example
 
 ```go
+import "github.com/yohamta/ganim8/v2"
+
 type Game struct {
 	prevUpdateTime time.Time
 	anim           *ganim8.Animation

@@ -4,8 +4,8 @@ import "github.com/hajimehoshi/ebiten/v2"
 
 var drawOpts = DrawOpts(0, 0, 0, 1, 1, 1, 0.5, 0.5)
 
-// DrawSpr draws a sprite to the screen.
-func DrawSpr(screen *ebiten.Image, spr *Sprite, index int, x, y, rot, sx, sy, ox, oy float64) {
+// DrawSprite draws a sprite to the screen.
+func DrawSprite(screen *ebiten.Image, spr *Sprite, index int, x, y, rot, sx, sy, ox, oy float64) {
 	drawOpts.SetPos(x, y)
 	drawOpts.SetRot(rot)
 	drawOpts.SetScale(sx, sy)

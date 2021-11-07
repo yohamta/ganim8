@@ -16,6 +16,12 @@ func assertPositiveInteger(value int, name string) {
 	}
 }
 
+func assertSize(size, limit int, name string) {
+	if size > limit {
+		log.Fatal(fmt.Sprintf("%s should be <= %d, was %d", name, limit, size))
+	}
+}
+
 type frameCache map[string]map[int]map[int]*image.Rectangle
 
 var _frames frameCache
@@ -53,6 +59,8 @@ func NewGrid(frameWidth, frameHeight, imageWidth, imageHeight int, args ...int) 
 	assertPositiveInteger(frameHeight, "frameHeight")
 	assertPositiveInteger(imageWidth, "imageWidth")
 	assertPositiveInteger(imageHeight, "imageHeight")
+	assertSize(frameWidth, imageWidth, "frameWidth")
+	assertSize(frameHeight, imageHeight, "frameHeight")
 
 	left, top := 0, 0
 	switch len(args) {

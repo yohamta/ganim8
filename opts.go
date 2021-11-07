@@ -20,7 +20,7 @@ func (drawOpts *DrawOptions) SetPos(x, y float64) {
 }
 
 // SetRotate sets the rotation of the sprite.
-func (drawOpts *DrawOptions) SetRotate(r float64) {
+func (drawOpts *DrawOptions) SetRot(r float64) {
 	drawOpts.Rotate = r
 }
 
@@ -32,8 +32,8 @@ func (drawOpts *DrawOptions) SetOrigin(x, y float64) {
 
 // SetScale sets the scale of the sprite.
 func (drawOpts *DrawOptions) SetScale(x, y float64) {
-	drawOpts.OriginX = x
-	drawOpts.OriginY = y
+	drawOpts.ScaleX = x
+	drawOpts.ScaleY = y
 }
 
 // ShaderOptions represents the option for Sprite.DrawWithShader()

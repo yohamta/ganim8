@@ -1,6 +1,9 @@
 # ganim8
 
-ganim8 is an Animation library for [Ebiten](https://ebiten.org/) which is a golang version of [anim8](https://github.com/kikito/anim8).
+ganim8 is an Animation library for [Ebiten](https://ebiten.org/).
+
+- v1.x is pretty much the same API with [anim8](https://github.com/kikito/anim8).
+- v2.x is more optimized for Ebiten to be more performant and glanular control.
 
 [GoDoc](https://pkg.go.dev/github.com/yohamta/ganim8)
 
@@ -54,13 +57,16 @@ func NewGame() *Game {
 	// The below code get frames 1 to 5 column in row 5
 	frames := grid.GetFrames("1-5", 5)
 
-	// Animations are groups of frames that are interchanged every now and then.
+	// Sprites are groups of frames that caches subImages of the specified grid and the texture
+	// Sprite accepts 2 parameters: a textureImage and frames
+	// frames is an array of frames ([]*image.Rectangle).
+	sprite := ganim8.NewSprite(monsterImage, grid.GetFrames("1-5", 5))
+
+	// Animations are wrappers of Sprites.
+	// It is handy to update the sprite automatically with specified time duration.
 	// 
 	// NewAnimation() accepts 3 parameters:
-	// ganim8.NewAnimation(frames, durations, onLoop)
-	// 
-	// frames is an array of frames ([]*image.Rectangle). You could provide
-	// your own slice if you wanted to, but using a grid to get them is very convenient.
+	// ganim8.NewAnimation(sprite, durations, onLoop)
 	// 
 	// durations is a time.Duration or []time.Duration or
 	// map[string]time.Duration.
@@ -77,7 +83,7 @@ func NewGame() *Game {
 	// It can be any function that follows the type "func(anim *Animation, loops int)".
 	// The first parameter is the animation object and the second parameter is
 	// the count of the loops that elapsed since the previous Animation.Update().
-	g.anim = ganim8.NewAnimation(frames, 100*time.Millisecond, ganim8.Nop)
+	g.anim = ganim8.NewAnimation(sprite, 100*time.Millisecond, ganim8.Nop)
 
 	return g
 }
@@ -98,7 +104,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 	// If those are not specified, defaults values will be applied.
 	// 
 	// In this example, it draws the animation at the center of the screen.
-	g.anim.Draw(screen, monsterImage, ganim8.DrawOpts(screenWidth/2, screenHeight/2, 0, 1, 1, 0.5, 0.5))
+	g.anim.Draw(screen, ganim8.DrawOpts(screenWidth/2, screenHeight/2, 0, 1, 1, 0.5, 0.5))
 }
 
 func (g *Game) Update() error {

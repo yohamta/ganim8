@@ -62,15 +62,14 @@ const (
 // Animation represents an animation created from specified frames
 // and an *ebiten.Image
 type Animation struct {
-	sprite             *Sprite
-	position           int
-	timer              time.Duration
-	durations          []time.Duration
-	intervals          []time.Duration
-	totalDuration      time.Duration
-	onLoop             OnLoop
-	status             Status
-	flippedH, flippedV bool
+	sprite        *Sprite
+	position      int
+	timer         time.Duration
+	durations     []time.Duration
+	intervals     []time.Duration
+	totalDuration time.Duration
+	onLoop        OnLoop
+	status        Status
 }
 
 // OnLoop is callback function which representing
@@ -133,8 +132,6 @@ func NewAnimation(sprite *Sprite, durations interface{}, onLoop OnLoop) *Animati
 		totalDuration: totalDuration,
 		onLoop:        onLoop,
 		status:        Playing,
-		flippedH:      false,
-		flippedV:      false,
 	}
 	return anim
 }
@@ -143,16 +140,6 @@ func NewAnimation(sprite *Sprite, durations interface{}, onLoop OnLoop) *Animati
 func (anim *Animation) Clone() *Animation {
 	new := *anim
 	return &new
-}
-
-// FlipH flips the animation horizontally.
-func (anim *Animation) FlipH() {
-	anim.flippedH = !anim.flippedH
-}
-
-// FlipV flips the animation horizontally.
-func (anim *Animation) FlipV() {
-	anim.flippedV = !anim.flippedV
 }
 
 func seekFrameIndex(intervals []time.Duration, timer time.Duration) int {

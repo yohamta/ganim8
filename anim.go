@@ -198,17 +198,17 @@ func (anim *Animation) TotalDuration() time.Duration {
 }
 
 // Size returns the size of the current frame.
-func (anim *Animation) Size() (float64, float64) {
+func (anim *Animation) Size() (int, int) {
 	return anim.sprite.Size()
 }
 
 // W is a shortcut for Size().X.
-func (anim *Animation) W() float64 {
+func (anim *Animation) W() int {
 	return anim.sprite.W()
 }
 
 // H is a shortcut for Size().Y.
-func (anim *Animation) H() float64 {
+func (anim *Animation) H() int {
 	return anim.sprite.H()
 }
 

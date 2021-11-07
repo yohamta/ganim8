@@ -7,6 +7,10 @@ import (
 )
 
 type SpriteSize struct {
+	W, H int
+}
+
+type SpriteSizeF struct {
 	W, H float64
 }
 
@@ -17,6 +21,7 @@ type Sprite struct {
 	image              *ebiten.Image
 	subImages          []*ebiten.Image
 	size               SpriteSize
+	sizeF              SpriteSizeF
 	length             int
 	flippedH, flippedV bool
 }
@@ -28,8 +33,10 @@ func NewSprite(img *ebiten.Image, frames []*image.Rectangle) *Sprite {
 		subImages[i] = img.SubImage(*frame).(*ebiten.Image)
 	}
 	size := SpriteSize{0, 0}
+	sizeF := SpriteSizeF{0, 0}
 	if len(frames) > 0 {
-		size = SpriteSize{float64(frames[0].Dx()), float64(frames[0].Dy())}
+		size = SpriteSize{frames[0].Dx(), frames[0].Dy()}
+		sizeF = SpriteSizeF{float64(frames[0].Dx()), float64(frames[0].Dy())}
 	}
 	return &Sprite{
 		frames:    frames,
@@ -37,21 +44,22 @@ func NewSprite(img *ebiten.Image, frames []*image.Rectangle) *Sprite {
 		subImages: subImages,
 		length:    len(frames),
 		size:      size,
+		sizeF:     sizeF,
 	}
 }
 
 // Size returns the size of the sprite.
-func (spr *Sprite) Size() (float64, float64) {
+func (spr *Sprite) Size() (int, int) {
 	return spr.size.W, spr.size.H
 }
 
 // W is a shortcut for Size().X.
-func (spr *Sprite) W() float64 {
+func (spr *Sprite) W() int {
 	return spr.size.W
 }
 
 // H is a shortcut for Size().Y.
-func (spr *Sprite) H() float64 {
+func (spr *Sprite) H() int {
 	return spr.size.H
 }
 
@@ -73,7 +81,7 @@ func (spr *Sprite) FlipV() {
 // Draw draws the current frame with the specified options.
 func (spr *Sprite) Draw(screen *ebiten.Image, index int, opts *DrawOptions) {
 	x, y := opts.X, opts.Y
-	w, h := spr.Size()
+	w, h := spr.sizeF.W, spr.sizeF.H
 	r := opts.Rotate
 	ox, oy := opts.OriginX, opts.OriginY
 	sx, sy := opts.ScaleX, opts.ScaleY
@@ -110,7 +118,7 @@ func (spr *Sprite) Draw(screen *ebiten.Image, index int, opts *DrawOptions) {
 // DrawWithShader draws the current frame with the specified options.
 func (spr *Sprite) DrawWithShader(screen *ebiten.Image, index int, opts *DrawOptions, shaderOpts *ShaderOptions) {
 	x, y := opts.X, opts.Y
-	w, h := spr.Size()
+	w, h := spr.sizeF.W, spr.sizeF.H
 	r := opts.Rotate
 	ox, oy := opts.OriginX, opts.OriginY
 	sx, sy := opts.ScaleX, opts.ScaleY

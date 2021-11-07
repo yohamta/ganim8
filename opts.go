@@ -13,6 +13,29 @@ type DrawOptions struct {
 	CompositeMode    ebiten.CompositeMode
 }
 
+// SetPos sets the position of the sprite.
+func (drawOpts *DrawOptions) SetPos(x, y float64) {
+	drawOpts.X = x
+	drawOpts.Y = y
+}
+
+// SetRotate sets the rotation of the sprite.
+func (drawOpts *DrawOptions) SetRotate(r float64) {
+	drawOpts.Rotate = r
+}
+
+// SetOrigin sets the origin of the sprite.
+func (drawOpts *DrawOptions) SetOrigin(x, y float64) {
+	drawOpts.OriginX = x
+	drawOpts.OriginY = y
+}
+
+// SetScale sets the scale of the sprite.
+func (drawOpts *DrawOptions) SetScale(x, y float64) {
+	drawOpts.OriginX = x
+	drawOpts.OriginY = y
+}
+
 // ShaderOptions represents the option for Sprite.DrawWithShader()
 type ShaderOptions struct {
 	Uniforms map[string]interface{}

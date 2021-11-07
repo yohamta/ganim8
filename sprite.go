@@ -48,6 +48,7 @@ func NewSprite(img *ebiten.Image, frames []*image.Rectangle) *Sprite {
 		size:      size,
 		sizeF:     sizeF,
 		op:        &ebiten.DrawImageOptions{},
+		shaderOp:  &ebiten.DrawRectShaderOptions{},
 	}
 }
 

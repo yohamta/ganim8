@@ -24,6 +24,8 @@ type Sprite struct {
 	sizeF              SpriteSizeF
 	length             int
 	flippedH, flippedV bool
+	op                 *ebiten.DrawImageOptions
+	shaderOp           *ebiten.DrawRectShaderOptions
 }
 
 // NewSprite returns a new sprite.
@@ -45,6 +47,7 @@ func NewSprite(img *ebiten.Image, frames []*image.Rectangle) *Sprite {
 		length:    len(frames),
 		size:      size,
 		sizeF:     sizeF,
+		op:        &ebiten.DrawImageOptions{},
 	}
 }
 
@@ -91,7 +94,8 @@ func (spr *Sprite) Draw(screen *ebiten.Image, index int, opts *DrawOptions) {
 	ox, oy := opts.OriginX, opts.OriginY
 	sx, sy := opts.ScaleX, opts.ScaleY
 
-	op := &ebiten.DrawImageOptions{}
+	op := spr.op
+	op.GeoM.Reset()
 	op.ColorM = opts.ColorM
 	op.CompositeMode = opts.CompositeMode
 
@@ -128,7 +132,8 @@ func (spr *Sprite) DrawWithShader(screen *ebiten.Image, index int, opts *DrawOpt
 	ox, oy := opts.OriginX, opts.OriginY
 	sx, sy := opts.ScaleX, opts.ScaleY
 
-	op := &ebiten.DrawRectShaderOptions{}
+	op := spr.shaderOp
+	op.GeoM.Reset()
 	op.CompositeMode = opts.CompositeMode
 	op.Uniforms = shaderOpts.Uniforms
 
@@ -155,8 +160,8 @@ func (spr *Sprite) DrawWithShader(screen *ebiten.Image, index int, opts *DrawOpt
 
 	subImage := spr.subImages[index]
 	op.Images[0] = subImage
-	for i := 0; i < 3; i++ {
-		op.Images[i+1] = shaderOpts.Images[i]
-	}
+	op.Images[1] = shaderOpts.Images[0]
+	op.Images[2] = shaderOpts.Images[1]
+	op.Images[3] = shaderOpts.Images[2]
 	screen.DrawRectShader(int(w), int(h), shaderOpts.Shader, op)
 }

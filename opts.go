@@ -36,6 +36,19 @@ func (drawOpts *DrawOptions) SetScale(x, y float64) {
 	drawOpts.ScaleY = y
 }
 
+// Reset resets the DrawOptions to default values.
+func (drawOpts *DrawOptions) Reset() {
+	drawOpts.X = 0
+	drawOpts.Y = 0
+	drawOpts.Rotate = 0
+	drawOpts.ScaleX = 1
+	drawOpts.ScaleY = 1
+	drawOpts.OriginX = 0
+	drawOpts.OriginY = 0
+	drawOpts.ColorM.Reset()
+	drawOpts.CompositeMode = ebiten.CompositeModeSourceOver
+}
+
 // ShaderOptions represents the option for Sprite.DrawWithShader()
 type ShaderOptions struct {
 	Uniforms map[string]interface{}

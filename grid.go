@@ -126,6 +126,14 @@ func (g *Grid) getOrCreateFrame(x, y int) *image.Rectangle {
 // will return the frames in {1,1}, {1,2} and {1,3} respectively.
 func (g *Grid) GetFrames(args ...interface{}) []*image.Rectangle {
 	result := []*image.Rectangle{}
+	if len(args) == 0 {
+		for y := 1; y <= g.height; y++ {
+			for x := 1; x <= g.width; x++ {
+				result = append(result, g.getOrCreateFrame(x, y))
+			}
+		}
+		return result
+	}
 	for i := 0; i < len(args); i += 2 {
 		minx, maxx, stepx := parseInterval(args[i])
 		miny, maxy, stepy := parseInterval(args[i+1])

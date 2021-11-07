@@ -133,6 +133,35 @@ func TestWithSeveralStrings(t *testing.T) {
 	}
 }
 
+func TestWithoutArgs(t *testing.T) {
+	grid := ganim8.NewGrid(16, 16, 64, 64)
+	nr := func(x, y int) *image.Rectangle {
+		r := image.Rect(x, y, x+16, y+16)
+		return &r
+	}
+
+	var tests = []struct {
+		name string
+		args []interface{}
+		want []*image.Rectangle
+	}{
+		{"returns all frames", []interface{}{}, []*image.Rectangle{
+			nr(0, 0), nr(16, 0), nr(32, 0), nr(48, 0),
+			nr(0, 16), nr(16, 16), nr(32, 16), nr(48, 16),
+			nr(0, 32), nr(16, 32), nr(32, 32), nr(48, 32),
+			nr(0, 48), nr(16, 48), nr(32, 48), nr(48, 48),
+		}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := _TestGetFrames(grid, tt.args)
+			if assertEqualRects(got, tt.want) == false {
+				t.Errorf("%s: got %v; want %v", tt.name, got, tt.want)
+			}
+		})
+	}
+}
+
 func _TestGetFrames(g *ganim8.Grid, args []interface{}) []*image.Rectangle {
 	return g.GetFrames(args...)
 }

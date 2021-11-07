@@ -63,6 +63,11 @@ func (spr *Sprite) H() int {
 	return spr.size.H
 }
 
+// Length returns the number of frames.
+func (spr *Sprite) Length() int {
+	return spr.length
+}
+
 // IsEnd returns true if the current frame is the last frame.
 func (spr *Sprite) IsEnd(index int) bool {
 	return index >= spr.length-1

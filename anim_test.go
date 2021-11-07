@@ -5,8 +5,11 @@ import (
 	"testing"
 	"time"
 
+	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/yohamta/ganim8"
 )
+
+var mockImg = ebiten.NewImage(1, 1)
 
 func mockFrames(n int) []*image.Rectangle {
 	result := make([]*image.Rectangle, n)
@@ -15,6 +18,12 @@ func mockFrames(n int) []*image.Rectangle {
 		result[i] = &r
 	}
 	return result
+}
+
+func mockSprite(n int) *ganim8.Sprite {
+	f := mockFrames(n)
+	spr := ganim8.NewSprite(mockImg, f)
+	return spr
 }
 
 func assertEqualDurations(a, b []time.Duration) bool {
@@ -39,7 +48,7 @@ func TestParsingDuration(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			anim := ganim8.NewAnimation(mockFrames(4), tt.args, ganim8.Nop)
+			anim := ganim8.NewAnimation(mockSprite(4), tt.args, ganim8.Nop)
 			got := anim.Durations()
 			if assertEqualDurations(got, tt.want) == false {
 				t.Errorf("%s: got %v; want %v", tt.name, got, tt.want)
@@ -60,7 +69,7 @@ func TestParsingDurationArr(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			anim := ganim8.NewAnimation(mockFrames(4), tt.args, ganim8.Nop)
+			anim := ganim8.NewAnimation(mockSprite(4), tt.args, ganim8.Nop)
 			got := anim.Durations()
 			if assertEqualDurations(got, tt.want) == false {
 				t.Errorf("%s: got %v; want %v", tt.name, got, tt.want)
@@ -81,7 +90,7 @@ func TestParsingDurationHash(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			anim := ganim8.NewAnimation(mockFrames(4), tt.args, ganim8.Nop)
+			anim := ganim8.NewAnimation(mockSprite(4), tt.args, ganim8.Nop)
 			got := anim.Durations()
 			if assertEqualDurations(got, tt.want) == false {
 				t.Errorf("%s: got %v; want %v", tt.name, got, tt.want)
@@ -100,7 +109,7 @@ func TestTotalDuration(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			anim := ganim8.NewAnimation(mockFrames(4), tt.args, ganim8.Nop)
+			anim := ganim8.NewAnimation(mockSprite(4), tt.args, ganim8.Nop)
 			got := anim.TotalDuration()
 			if got != tt.want {
 				t.Errorf("%s: got %v; want %v", tt.name, got, tt.want)
@@ -120,7 +129,7 @@ func TestUpdate(t *testing.T) {
 		want           int
 	}{
 		{"moves to the next frame", d(1), d(1), 2},
-		{"moves several mockFrames if needed", d(1), d(2), 3},
+		{"moves several mockSprite if needed", d(1), d(2), 3},
 		{"when the last frame is spent goes back to the first frame",
 			d(1), d(4), 1},
 		{"when there're different durations per frame",
@@ -130,7 +139,7 @@ func TestUpdate(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			anim := ganim8.NewAnimation(mockFrames(4), tt.durations, ganim8.Nop)
+			anim := ganim8.NewAnimation(mockSprite(4), tt.durations, ganim8.Nop)
 			anim.Update(tt.updateDuration)
 			got := anim.Position()
 			if got != tt.want {
@@ -158,7 +167,7 @@ func TestCallback(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got := 0
-			anim := ganim8.NewAnimation(mockFrames(4), d(1),
+			anim := ganim8.NewAnimation(mockSprite(4), d(1),
 				func(anim *ganim8.Animation, loops int) {
 					got += loops
 				})
@@ -184,7 +193,7 @@ func TestPause(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			anim := ganim8.NewAnimation(mockFrames(4), d(1), ganim8.Nop)
+			anim := ganim8.NewAnimation(mockSprite(4), d(1), ganim8.Nop)
 			anim.Pause()
 			anim.Update(tt.arg)
 			got := anim.Position()
@@ -208,7 +217,7 @@ func TestResume(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			anim := ganim8.NewAnimation(mockFrames(4), d(1), ganim8.Nop)
+			anim := ganim8.NewAnimation(mockSprite(4), d(1), ganim8.Nop)
 			anim.Pause()
 			anim.Resume()
 			anim.Update(tt.arg)
@@ -234,7 +243,7 @@ func TestGotoFrame(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			anim := ganim8.NewAnimation(mockFrames(4), d(1), ganim8.Nop)
+			anim := ganim8.NewAnimation(mockSprite(4), d(1), ganim8.Nop)
 			anim.GoToFrame(tt.arg)
 			got := anim.Position()
 			if got != tt.want {
@@ -262,7 +271,7 @@ func TestPauseAtEnd(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			anim := ganim8.NewAnimation(mockFrames(4), d(1), ganim8.PauseAtEnd)
+			anim := ganim8.NewAnimation(mockSprite(4), d(1), ganim8.PauseAtEnd)
 			anim.Update(tt.arg)
 			got := anim.Position()
 			if got != tt.want {
@@ -290,7 +299,7 @@ func TestPauseAtStart(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			anim := ganim8.NewAnimation(mockFrames(4), d(1), ganim8.PauseAtStart)
+			anim := ganim8.NewAnimation(mockSprite(4), d(1), ganim8.PauseAtStart)
 			anim.Update(tt.arg)
 			got := anim.Position()
 			if got != tt.want {

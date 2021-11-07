@@ -38,7 +38,7 @@ func (g *Game) Update() error {
 
 func (g *Game) Draw(screen *ebiten.Image) {
 	screen.Clear()
-	g.anim.Draw(screen, monsterImage, ganim8.DrawOpts(screenWidth/2, screenHeight/2, 0, 1, 1, 0.5, 0.5))
+	g.anim.Draw(screen, ganim8.DrawOpts(screenWidth/2, screenHeight/2, 0, 1, 1, 0.5, 0.5))
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (int, int) {
@@ -56,7 +56,8 @@ func NewGame() *Game {
 
 func (g *Game) setupAnimations() {
 	grid := ganim8.NewGrid(100, 100, 500, 600)
-	g.anim = ganim8.NewAnimation(grid.GetFrames("1-5", 5), 100*time.Millisecond, ganim8.Nop)
+	sprite := ganim8.NewSprite(monsterImage, grid.GetFrames("1-5", 5))
+	g.anim = ganim8.NewAnimation(sprite, 100*time.Millisecond, ganim8.Nop)
 }
 
 func main() {

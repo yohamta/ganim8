@@ -17,20 +17,6 @@ func init() {
 	_imageCache = make(map[*ebiten.Image]map[*image.Rectangle]*ebiten.Image)
 }
 
-func createSubImage(img *ebiten.Image, r *image.Rectangle) *ebiten.Image {
-	return img.SubImage(*r).(*ebiten.Image)
-}
-
-func getOrCreateSubImage(img *ebiten.Image, r *image.Rectangle) *ebiten.Image {
-	if _, ok := _imageCache[img]; !ok {
-		_imageCache[img] = map[*image.Rectangle]*ebiten.Image{}
-	}
-	if _, ok := _imageCache[img][r]; !ok {
-		_imageCache[img][r] = createSubImage(img, r)
-	}
-	return _imageCache[img][r]
-}
-
 func parseDurations(durations interface{}, frameCount int) []time.Duration {
 	result := make([]time.Duration, frameCount)
 	switch val := durations.(type) {
@@ -76,7 +62,7 @@ const (
 // Animation represents an animation created from specified frames
 // and an *ebiten.Image
 type Animation struct {
-	frames             []*image.Rectangle
+	sprite             *Sprite
 	position           int
 	timer              time.Duration
 	durations          []time.Duration
@@ -135,11 +121,11 @@ func PauseAtStart(anim *Animation, loops int) {
 // 100 * time.Millisecond } or you can specify durations for
 // ranges of frames: map[string]time.Duration { "1-2":
 // 100 * time.Millisecond, "3-5": 200 * time.Millisecond }.
-func NewAnimation(frames []*image.Rectangle, durations interface{}, onLoop OnLoop) *Animation {
-	_durations := parseDurations(durations, len(frames))
+func NewAnimation(sprite *Sprite, durations interface{}, onLoop OnLoop) *Animation {
+	_durations := parseDurations(durations, sprite.length)
 	intervals, totalDuration := parseIntervals(_durations)
 	anim := &Animation{
-		frames:        frames,
+		sprite:        sprite,
 		position:      0,
 		timer:         0,
 		durations:     _durations,
@@ -186,7 +172,7 @@ func seekFrameIndex(intervals []time.Duration, timer time.Duration) int {
 
 // Update updates the animation.
 func (anim *Animation) Update(elapsedTime time.Duration) {
-	if anim.status != Playing || len(anim.frames) <= 1 {
+	if anim.status != Playing || anim.sprite.length <= 1 {
 		return
 	}
 	anim.timer += elapsedTime
@@ -225,9 +211,18 @@ func (anim *Animation) TotalDuration() time.Duration {
 }
 
 // Size returns the size of the current frame.
-func (anim *Animation) Size() (int, int) {
-	size := anim.frames[anim.position].Size()
-	return size.X, size.Y
+func (anim *Animation) Size() (float64, float64) {
+	return anim.sprite.Size()
+}
+
+// W is a shortcut for Size().X.
+func (anim *Animation) W() float64 {
+	return anim.sprite.W()
+}
+
+// H is a shortcut for Size().Y.
+func (anim *Animation) H() float64 {
+	return anim.sprite.H()
 }
 
 // Timer returns the current accumulated times of current frame.
@@ -245,7 +240,7 @@ func (anim *Animation) GoToFrame(position int) {
 // PauseAtEnd pauses the animation and set the position
 // to the last frame.
 func (anim *Animation) PauseAtEnd() {
-	anim.position = len(anim.frames) - 1
+	anim.position = anim.sprite.length - 1
 	anim.timer = anim.totalDuration
 	anim.Pause()
 }
@@ -263,87 +258,12 @@ func (anim *Animation) Resume() {
 	anim.status = Playing
 }
 
-// DrawOpts returns DrawOptions pointer with specified
-// settings.
-// The paramters are x, y, rotate (in radian), scaleX, scaleY
-// originX, originY.
-// If scaleX and ScaleY is not specified the default value
-// will be 1.0, 1.0.
-// If OriginX and OriginY is not specified the default value
-// will be 0, 0
-func DrawOpts(x, y float64, args ...float64) *DrawOptions {
-	r, sx, sy, ox, oy := 0., 1., 1., 0., 0.
-	switch len(args) {
-	case 5:
-		oy = args[4]
-		fallthrough
-	case 4:
-		ox = args[3]
-		fallthrough
-	case 3:
-		sy = args[2]
-		fallthrough
-	case 2:
-		sx = args[1]
-		fallthrough
-	case 1:
-		r = args[0]
-	}
-	return &DrawOptions{
-		X:       x,
-		Y:       y,
-		Rotate:  r,
-		ScaleX:  sx,
-		ScaleY:  sy,
-		OriginX: ox,
-		OriginY: oy,
-	}
-}
-
-func (anim *Animation) dimensions() (float64, float64) {
-	size := anim.frames[anim.position].Size()
-	return float64(size.X), float64(size.Y)
-}
-
-// DrawOptions represents the option for Animation.Draw().
-// For shortcut, DrawOpts() function can be used.
-type DrawOptions struct {
-	X, Y             float64
-	Rotate           float64
-	ScaleX, ScaleY   float64
-	OriginX, OriginY float64
-}
-
 // Draw draws the animation with the specified option parameters.
-func (anim *Animation) Draw(screen *ebiten.Image, img *ebiten.Image, opts *DrawOptions) {
-	x, y := opts.X, opts.Y
-	w, h := anim.dimensions()
-	r := opts.Rotate
-	ox, oy := opts.OriginX, opts.OriginY
-	sx, sy := opts.ScaleX, opts.ScaleY
+func (anim *Animation) Draw(screen *ebiten.Image, opts *DrawOptions) {
+	anim.sprite.Draw(screen, anim.position, opts)
+}
 
-	op := &ebiten.DrawImageOptions{}
-	if r != 0 {
-		op.GeoM.Translate(-w*ox, -h*oy)
-		op.GeoM.Rotate(r)
-		op.GeoM.Translate(w*ox, h*oy)
-	}
-
-	if anim.flippedH {
-		sx = sx * -1
-	}
-	if anim.flippedV {
-		sy = sy * -1
-	}
-
-	if sx != 1 || sy != 1 {
-		op.GeoM.Translate(-w*ox, -h*oy)
-		op.GeoM.Scale(sx, sy)
-		op.GeoM.Translate(w*ox, h*oy)
-	}
-
-	op.GeoM.Translate((x - w*ox), (y - h*oy))
-
-	frame := anim.frames[anim.position]
-	screen.DrawImage(getOrCreateSubImage(img, frame), op)
+// DrawWithShader draws the animation with the specified option parameters.
+func (anim *Animation) DrawWithShader(screen *ebiten.Image, opts *DrawOptions, shaderOpts *ShaderOptions) {
+	anim.sprite.DrawWithShader(screen, anim.position, opts, shaderOpts)
 }

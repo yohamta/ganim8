@@ -4,6 +4,7 @@ import (
 	"image"
 
 	"github.com/hajimehoshi/ebiten/v2"
+	"golang.org/x/exp/rand"
 )
 
 type SpriteSize struct {
@@ -70,6 +71,11 @@ func (spr *Sprite) H() int {
 // Length returns the number of frames.
 func (spr *Sprite) Length() int {
 	return spr.length
+}
+
+// RandomIndex returns random index of the sprite
+func (spr *Sprite) RandomIndex() int {
+	return rand.Intn(spr.length)
 }
 
 // IsEnd returns true if the current frame is the last frame.

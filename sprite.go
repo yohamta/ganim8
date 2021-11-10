@@ -78,6 +78,14 @@ func (spr *Sprite) RandomIndex() int {
 	return rand.Intn(spr.length)
 }
 
+// LoopIndex returns loop index of the sprite.
+func (spr *Sprite) LoopIndex(index int) int {
+	if index >= spr.length {
+		return index % spr.length
+	}
+	return index
+}
+
 // IsEnd returns true if the current frame is the last frame.
 func (spr *Sprite) IsEnd(index int) bool {
 	return index >= spr.length-1

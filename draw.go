@@ -32,7 +32,7 @@ func DrawAnime(screen *ebiten.Image, anim *Animation, x, y, rot, sx, sy, ox, oy 
 }
 
 // DrawAnimeWithOpts draws an anime to the screen.
-func DrawAnimeWithOpts(screen *ebiten.Image, anim *Animation, index int, opts *DrawOptions, shaderOpts *ShaderOptions) {
+func DrawAnimeWithOpts(screen *ebiten.Image, anim *Animation, opts *DrawOptions, shaderOpts *ShaderOptions) {
 	if shaderOpts != nil {
 		anim.DrawWithShader(screen, opts, shaderOpts)
 	} else {

@@ -154,6 +154,16 @@ func (g *Grid) GetFrames(args ...interface{}) []*image.Rectangle {
 	return result
 }
 
+// Width returns the width of the grid
+func (g *Grid) Width() int {
+	return g.width
+}
+
+// Height returns the height of the grid
+func (g *Grid) Height() int {
+	return g.height
+}
+
 // G is a shortcut of GetFrames.
 func (g *Grid) G(args ...interface{}) []*image.Rectangle {
 	return g.GetFrames(args...)

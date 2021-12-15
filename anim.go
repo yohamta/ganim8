@@ -171,6 +171,14 @@ func (anim *Animation) Update(elapsedTime time.Duration) {
 	anim.position = seekFrameIndex(anim.intervals, anim.timer)
 }
 
+// SetDurations sets the durations of the animation.
+func (anim *Animation) SetDurations(durations interface{}) {
+	_durations := parseDurations(durations, anim.sprite.length)
+	anim.durations = _durations
+	anim.intervals, anim.totalDuration = parseIntervals(_durations)
+	anim.timer = 0
+}
+
 // Status returns the status of the animation.
 func (anim *Animation) Status() Status {
 	return anim.status

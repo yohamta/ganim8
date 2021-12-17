@@ -58,14 +58,24 @@ func (spr *Sprite) Size() (int, int) {
 	return spr.size.W, spr.size.H
 }
 
-// W is a shortcut for Size().X.
-func (spr *Sprite) W() int {
+// Width returns the width of the sprite.
+func (spr *Sprite) Width() int {
 	return spr.size.W
 }
 
-// H is a shortcut for Size().Y.
-func (spr *Sprite) H() int {
+// W is a shortcut for Width().
+func (spr *Sprite) W() int {
+	return spr.Width()
+}
+
+// Height returns the height of the sprite.
+func (spr *Sprite) Height() int {
 	return spr.size.H
+}
+
+// H is a shortcut for Height().
+func (spr *Sprite) H() int {
+	return spr.Height()
 }
 
 // Length returns the number of frames.

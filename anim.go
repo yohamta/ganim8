@@ -225,6 +225,11 @@ func (anim *Animation) Timer() time.Duration {
 	return anim.timer
 }
 
+// Sprite returns the sprite of the animation.
+func (anim *Animation) Sprite() *Sprite {
+	return anim.sprite
+}
+
 // GoToFrame sets the position of the animation and
 // sets the timer at the start of the frame.
 func (anim *Animation) GoToFrame(position int) {

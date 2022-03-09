@@ -124,12 +124,6 @@ func (spr *Sprite) Draw(screen *ebiten.Image, index int, opts *DrawOptions) {
 	op.ColorM = opts.ColorM
 	op.CompositeMode = opts.CompositeMode
 
-	if r != 0 {
-		op.GeoM.Translate(-w*ox, -h*oy)
-		op.GeoM.Rotate(r)
-		op.GeoM.Translate(w*ox, h*oy)
-	}
-
 	if spr.flippedH {
 		sx = sx * -1
 	}
@@ -140,6 +134,12 @@ func (spr *Sprite) Draw(screen *ebiten.Image, index int, opts *DrawOptions) {
 	if sx != 1 || sy != 1 {
 		op.GeoM.Translate(-w*ox, -h*oy)
 		op.GeoM.Scale(sx, sy)
+		op.GeoM.Translate(w*ox, h*oy)
+	}
+
+	if r != 0 {
+		op.GeoM.Translate(-w*ox, -h*oy)
+		op.GeoM.Rotate(r)
 		op.GeoM.Translate(w*ox, h*oy)
 	}
 

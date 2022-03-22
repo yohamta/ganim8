@@ -7,6 +7,8 @@ ganim8 is an Animation library for [Ebiten](https://ebiten.org/).
 
 [GoDoc](https://pkg.go.dev/github.com/yohamta/ganim8/v2)
 
+Any types of Issue/PRs are welcomed :)
+
 ## Example
 
 ```go

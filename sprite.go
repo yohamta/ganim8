@@ -111,6 +111,16 @@ func (spr *Sprite) FlipV() {
 	spr.flippedV = !spr.flippedV
 }
 
+// SetFlipH flips the sprite horizontally.
+func (spr *Sprite) SetFlipH(flipH bool) {
+	spr.flippedH = flipH
+}
+
+// SetFlipV flips the sprite vertically.
+func (spr *Sprite) SetFlipV(flipV bool) {
+	spr.flippedV = flipV
+}
+
 // Draw draws the current frame with the specified options.
 func (spr *Sprite) Draw(screen *ebiten.Image, index int, opts *DrawOptions) {
 	x, y := opts.X, opts.Y

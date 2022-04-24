@@ -1,6 +1,6 @@
 # ganim8
 
-ganim8 is an Animation library for [Ebiten](https://ebiten.org/).
+anim8 clone written in Go for [Ebiten](https://ebiten.org/).
 
 - v1.x is pretty much the same API with [anim8](https://github.com/kikito/anim8).
 - v2.x is more optimized for Ebiten to be more performant and glanular control introducing [Sprite](https://pkg.go.dev/github.com/yohamta/ganim8/v2#Sprite) API.

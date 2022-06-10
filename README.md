@@ -20,25 +20,35 @@ In order to build animations more easily, ganim8 divides the process in two step
 
 ## Brief usage
 
+**Create a Grid**
 ```go
-// Create a Grid
 gridWidth, gridHeight := 32, 32
 imgWidth, imgHeight := 320, 320
 var grid *Grid = ganim8.NewGrid(gridWidth, gridHeight, imageWidth, imageHeight int)
+```
 
-// Get frames from a Grid
+**Create frames(Quads) from a Grid**
+
+```go
 var column string = "1-5"
 var row int = 1
 var frames []*image.Rectangle = grid.GetFrames(column, row)
+```
 
-// Create a Sprite
-var spr *ganim8.Sprite = ganim8.NewSprite(img *ebiten.Image, frames) *Grid
+**Create a Sprite from frames(Quads)**
+
+```go
+var spr *ganim8.Sprite = ganim8.NewSprite(img, frames)
 
 // Draw a Sprite
 x, y := 0, 0
 rotaion, scaleX, scaleY, originX, originY := 0.0, 1.0, 1.0, 0.5, 0.5
 ganim8.DrawSprite(screen, spr, frameIndex, x, y, rotation, scaleX, scaleY, originX, originY)
+```
 
+**Create an Animation from a Sprite**
+
+```go
 // Create an Animation from a Sprite
 var duration time.Duration = time.Milliseconds * 20
 var onLoop func(anim *Animation, loops int) = ganim8.Nop // LOOP animation

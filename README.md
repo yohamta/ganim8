@@ -1,6 +1,6 @@
 # ganim8
 
-Animation library for [Ebitengin](https://ebiten.org/) inspired by [anim8](https://github.com/kikito/anim8).
+Animation library for [Ebitengine](https://ebiten.org/) inspired by [anim8](https://github.com/kikito/anim8).
 
 In order to build animations more easily, ganim8 divides the process in two steps: first you create a grid, which is capable of creating frames (Quads) easily and quickly. Then you use the grid to create one or more animations.
 
@@ -117,7 +117,7 @@ animation.Update()
 Use this inside `Game.Update()` so that your animation changes frames according to the time that has passed.
 
 It assumes that the time delta is 1/60[s] (1/TPS to be exact).
-For more details about TPS (ticks per seconds) in Ebitengin is explained [here](https://github.com/tinne26/tps-vs-fps) that is written by [tinne26](https://github.com/tinne26).
+For more details about TPS (ticks per seconds) in Ebitengine is explained [here](https://github.com/tinne26/tps-vs-fps) that is written by [tinne26](https://github.com/tinne26).
 
 
 ```go

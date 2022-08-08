@@ -140,6 +140,12 @@ func NewAnimation(sprite *Sprite, durations interface{}, onLoop ...OnLoop) *Anim
 	return anim
 }
 
+// New creates a new animation from the specified image
+func New(img *ebiten.Image, frames []*image.Rectangle, durations interface{}, onLoop ...OnLoop) *Animation {
+	spr := NewSprite(img, frames)
+	return NewAnimation(spr, durations, onLoop...)
+}
+
 // Clone return a copied animation object.
 func (anim *Animation) Clone() *Animation {
 	new := *anim

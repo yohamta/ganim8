@@ -164,7 +164,12 @@ func (g *Grid) Height() int {
 	return g.height
 }
 
-// G is a shortcut of GetFrames.
+// Frames is a shorter name of GetFrames
+func (g *Grid) Frames(args ...interface{}) []*image.Rectangle {
+	return g.GetFrames(args...)
+}
+
+// G is a shorter name of GetFrames
 func (g *Grid) G(args ...interface{}) []*image.Rectangle {
 	return g.GetFrames(args...)
 }

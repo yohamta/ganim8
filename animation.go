@@ -120,9 +120,13 @@ func PauseAtStart(anim *Animation, loops int) {
 // 100 * time.Millisecond } or you can specify durations for
 // ranges of frames: map[string]time.Duration { "1-2":
 // 100 * time.Millisecond, "3-5": 200 * time.Millisecond }.
-func NewAnimation(sprite *Sprite, durations interface{}, onLoop OnLoop) *Animation {
+func NewAnimation(sprite *Sprite, durations interface{}, onLoop ...OnLoop) *Animation {
 	_durations := parseDurations(durations, sprite.length)
 	intervals, totalDuration := parseIntervals(_durations)
+	ol := Nop
+	if len(onLoop) > 0 {
+		ol = onLoop[0]
+	}
 	anim := &Animation{
 		sprite:        sprite,
 		position:      0,
@@ -130,7 +134,7 @@ func NewAnimation(sprite *Sprite, durations interface{}, onLoop OnLoop) *Animati
 		durations:     _durations,
 		intervals:     intervals,
 		totalDuration: totalDuration,
-		onLoop:        onLoop,
+		onLoop:        ol,
 		status:        Playing,
 	}
 	return anim

@@ -31,6 +31,8 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 func (g *Game) Update() error {
   g.animation.Update()
+  // Note: it assumes that the time delta is 16ms by default 
+  //       if you need to specify different delta you can use Animation.UpdateWithDelta(delta) instead
   return nil
 }
 ```
@@ -118,6 +120,12 @@ Use this inside `Game.Update()` so that your animation changes frames according 
 
 It assumes that the time delta is 1/60[s] (1/TPS to be exact).
 For more details about TPS (ticks per seconds) in Ebitengine is explained [here](https://github.com/tinne26/tps-vs-fps) that is written by [tinne26](https://github.com/tinne26).
+
+If you need to specify delta for update animations, you can use `UpdateWithDelta()` instead:
+
+```go
+animation.UpdateWithDelta(delta)
+```
 
 
 ```go

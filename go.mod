@@ -7,6 +7,7 @@ require (
 	github.com/hajimehoshi/ebiten/v2 v2.3.7
 	github.com/jezek/xgb v1.0.1 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0
+	github.com/stretchr/testify v1.8.0
 	golang.org/x/exp v0.0.0-20210916165020-5cb4fee858ee // indirect
 	golang.org/x/exp/shiny v0.0.0-20220722155223-a9213eeb770e // indirect
 	golang.org/x/image v0.0.0-20220722155232-062f8c9fd539 // indirect

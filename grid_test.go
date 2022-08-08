@@ -4,6 +4,7 @@ import (
 	"image"
 	"testing"
 
+	"github.com/stretchr/testify/require"
 	"github.com/yohamta/ganim8/v2"
 )
 
@@ -160,6 +161,12 @@ func TestWithoutArgs(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestFrameCount(t *testing.T) {
+	gs := ganim8.NewGrid(32, 98, 1024, 768, 366, 102, 1)
+	f := gs.Frames("1-7", 1, "6-2", 1)
+	require.Equal(t, 12, len(f))
 }
 
 func _TestGetFrames(g *ganim8.Grid, args []interface{}) []*image.Rectangle {

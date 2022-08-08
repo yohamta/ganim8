@@ -20,7 +20,6 @@ const (
 )
 
 type Game struct {
-	prev          time.Time
 	spinning      []*ganim8.Animation
 	plane         *ganim8.Animation
 	seaplane      *ganim8.Animation
@@ -29,26 +28,20 @@ type Game struct {
 }
 
 func NewGame() *Game {
-	g := &Game{
-		prev: time.Now(),
-	}
+	g := &Game{}
 	g.setupAnimations()
 
 	return g
 }
 
 func (g *Game) Update() error {
-	now := time.Now()
-	delta := now.Sub(g.prev)
-	g.prev = now
-
 	for _, a := range g.spinning {
-		a.Update(delta)
+		a.Update()
 	}
-	g.plane.Update(delta)
-	g.seaplane.Update(delta)
-	g.submarine.Update(delta)
-	g.seaplaneAngle += g.seaplaneAngle + float64(delta.Milliseconds())*math.Pi/180
+	g.plane.Update()
+	g.seaplane.Update()
+	g.submarine.Update()
+	g.seaplaneAngle += g.seaplaneAngle + 10*math.Pi/180
 
 	return nil
 }

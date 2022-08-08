@@ -13,6 +13,8 @@ type imageCache map[*ebiten.Image]map[*image.Rectangle]*ebiten.Image
 
 var _imageCache imageCache
 
+var DefaultDelta = time.Millisecond * 16
+
 func init() {
 	_imageCache = make(map[*ebiten.Image]map[*image.Rectangle]*ebiten.Image)
 }
@@ -168,7 +170,12 @@ func seekFrameIndex(intervals []time.Duration, timer time.Duration) int {
 }
 
 // Update updates the animation.
-func (anim *Animation) Update(elapsedTime time.Duration) {
+func (anim *Animation) Update() {
+	anim.UpdateWithDelta(DefaultDelta)
+}
+
+// UpdateWithDelta updates the animation with the specified delta.
+func (anim *Animation) UpdateWithDelta(elapsedTime time.Duration) {
 	if anim.status != Playing || anim.sprite.length <= 1 {
 		return
 	}

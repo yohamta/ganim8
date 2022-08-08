@@ -150,8 +150,8 @@ func (g *Grid) GetFrames(args ...interface{}) []*image.Rectangle {
 	for i := 0; i < len(args); i += 2 {
 		minx, maxx, stepx := parseInterval(args[i])
 		miny, maxy, stepy := parseInterval(args[i+1])
-		for y := miny; y <= maxy; y += stepy {
-			for x := minx; x <= maxx; x += stepx {
+		for y := miny; stepy > 0 && y <= maxy || stepy < 0 && y >= maxy; y += stepy {
+			for x := minx; stepx > 0 && x <= maxx || stepx < 0 && x >= maxx; x += stepx {
 				result = append(result, g.getOrCreateFrame(x, y))
 			}
 		}

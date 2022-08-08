@@ -22,7 +22,7 @@ func parseInterval(val interface{}) (int, int, int) {
 		min, _ := strconv.Atoi(matches[1])
 		max, _ := strconv.Atoi(matches[2])
 		if min > max {
-			return max, min, 1
+			return min, max, -1
 		} else {
 			return min, max, 1
 		}

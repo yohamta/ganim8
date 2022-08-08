@@ -1,6 +1,7 @@
 package ganim8_test
 
 import (
+	"fmt"
 	"image"
 	"testing"
 
@@ -163,10 +164,29 @@ func TestWithoutArgs(t *testing.T) {
 	}
 }
 
-func TestFrameCount(t *testing.T) {
-	gs := ganim8.NewGrid(32, 98, 1024, 768, 366, 102, 1)
-	f := gs.Frames("1-7", 1, "6-2", 1)
-	require.Equal(t, 12, len(f))
+func TestFramesWithBorder(t *testing.T) {
+	gs := ganim8.NewGrid(32, 32, 1024, 1025, 0, 0, 1)
+	f := gs.Frames("1-3", 1, "3-1", 1)
+	require.Equal(t, 6, len(f))
+
+	expectedFrames := []image.Rectangle{
+		image.Rect(1, 1, 33, 33),
+		image.Rect(34, 1, 66, 33),
+		image.Rect(67, 1, 99, 33),
+	}
+
+	for i, want := range []image.Rectangle{
+		expectedFrames[0],
+		expectedFrames[1],
+		expectedFrames[2],
+		expectedFrames[2],
+		expectedFrames[1],
+		expectedFrames[0],
+	} {
+		t.Run(fmt.Sprintf("frame-%d", i), func(t *testing.T) {
+			require.Equal(t, want, f[i].Bounds())
+		})
+	}
 }
 
 func _TestGetFrames(g *ganim8.Grid, args []interface{}) []*image.Rectangle {

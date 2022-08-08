@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/yohamta/ganim8/v2"
+	"github.com/yohamta/ganim8/v3"
 )
 
 func assertEqualRect(a, b *image.Rectangle) bool {

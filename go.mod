@@ -1,4 +1,4 @@
-module github.com/yohamta/ganim8/v2
+module github.com/yohamta/ganim8/v3
 
 go 1.16
 

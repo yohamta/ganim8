@@ -11,7 +11,7 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 
-	"github.com/yohamta/ganim8/v2"
+	"github.com/yohamta/ganim8/v3"
 )
 
 const (

@@ -77,7 +77,7 @@ ganim8.NewGrid(frameWidth, frameHeight, imageWidth, imageHeight, left, top, bord
 
 * `frameWidth` and `frameHeight` are the dimensions of the animation *frames* - each of the individual "sub-images" that compose the animation. They are usually the same size as your character (so if the character is
     32x32 pixels, `frameWidth` is 32 and so is `frameHeight`)
-* `imageWidth` and `imageHeight` are the dimensions of the image where all the frames are. In LÖVE, they can be obtained by doing `image:getWidth()` and `image:getHeight()`.
+* `imageWidth` and `imageHeight` are the dimensions of the image where all the frames are.
 * `left` and `top` are optional, and both default to 0. They are "the left and top coordinates of the point in the image where you want to put the origin of coordinates of the grid". If all the frames in your grid are
   the same size, and the first one's top-left corner is 0,0, you probably won't need to use `left` or `top`.
 * `border` is also an optional value, and it also defaults to zero. What `border` does is allowing you to define "gaps" between your frames in the image. For example, imagine that you have frames of 32x32, but they
@@ -92,8 +92,8 @@ Grids only have one important method: `Grid.Frames(...)`.
 `Grid.Frames` accepts an arbitrary number of parameters. They can be either numbers or strings.
 
 * Each two numbers are interpreted as quad coordinates in the format `(column, row)`. This way, `grid.Frames(3,4)` will return the frame in column 3, row 4 of the grid. There can be more than just two: `grid.Frames(1,1, 1,2, 1,3)` will return the frames in {1,1}, {1,2} and {1,3} respectively.
-* Using numbers for long rows or columns is tedious - so grids also accept strings indicating range plus a row/column index. Diferentiating rows and columns is based on the order in which the range and index are provided. A row can be fetch by calling `grid.Frames('range', rowNumber)` and a column by calling `grid.Frames(columnNumber, 'range')`. The previous column of 3 elements, for example, can be also expressed like this: `grid.Frames(1,'1-3')`. Again, there can be more than one string-index pair (`grid.Frames(1,'1-3', '2-4',3)`)
-* It's also possible to combine both formats. For example: `grid.Frames(1,4, 1,'1-3')` will get the frame in {1,4} plus the frames 1 to 3 in column 1
+* Using numbers for long rows or columns is tedious - so grids also accept strings indicating range plus a row/column index. Diferentiating rows and columns is based on the order in which the range and index are provided. A row can be fetch by calling `grid.Frames("range", rowNumber)` and a column by calling `grid.Frames(columnNumber, "range")`. The previous column of 3 elements, for example, can be also expressed like this: `grid.Frames(1,"1-3")`. Again, there can be more than one string-index pair (`grid.Frames(1,"1-3", "2-4",3)`)
+* It's also possible to combine both formats. For example: `grid.Frames(1,4, 1,"1-3")` will get the frame in {1,4} plus the frames 1 to 3 in column 1
 
 Let's consider the submarine in the previous example. It has 7 frames, arranged horizontally.
 
@@ -119,7 +119,7 @@ animation := anim8.New(img, frames, durations, onLoop)
 ```
 
 * `img` is an image object to use for the animation.
-* `frames` is an array of frames (Quads in LÖVE argot). You could provide your own quad array if you wanted to, but using a grid to get them is very convenient.
+* `frames` is an array of frames ([image.Rectangle](https://pkg.go.dev/image#Rectangle)). You could provide your own quad array if you wanted to, but using a grid to get them is very convenient.
 * `durations` is a number or a table. When it's a number, it represents the duration of all frames in the animation. When it's a table, it can represent different durations for different frames. You can specify durations for all frames individually, like this: `[]time.Duration{time.Milliseconds * 100, time.Milliseconds * 500, time.Milliseconds * 100}` or you can specify durations for ranges of frames: `map[string]time.Duration{"3-5": time.Milliseconds * 200}`.
 * `onLoop` is an optional parameter which can be a function or a string representing one of the animation methods. It does nothing by default. If specified, it will be called every time an animation "loops". It will have two parameters: the animation instance, and how many loops have been elapsed. The most usual value (apart from none) is the
 string 'pauseAtEnd'. It will make the animation loop once and then pause and stop on the last frame.
@@ -146,7 +146,7 @@ Moves the animation to a given frame (frames start counting in 1).
 animation.Pause()
 ```
 
-Stops the animation from updating (@animation:update(dt)@ will have no effect)
+Stops the animation from updating.
 
 ```go
 animation.Resume()
@@ -168,7 +168,7 @@ Flips an animation horizontally (left goes to right and viceversa). This means t
 
 Note that this method does not create a new animation. If you want to create a new one, use the `Clone` method.
 
-This method returns the animation, so you can do things like `a := ganim8.New(img, g.Frames(1,"1-10"), 0.1).FlipH()` or `b := a.Clone().FlipV()`.
+This method returns the animation, so you can do things like `a := ganim8.New(img, g.Frames(1,"1-10"), time.Milliseconds * 100).FlipH()` or `b := a.Clone().FlipV()`.
 
 ```go
 animation.FlipV()

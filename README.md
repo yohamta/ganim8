@@ -6,16 +6,6 @@ In order to build animations more easily, ganim8 divides the process in two step
 
 [GoDoc](https://pkg.go.dev/github.com/yohamta/ganim8/v2)
 
-## Contents
-
-- [ganim8](#ganim8)
-  - [Contents](#contents)
-  - [Example](#example)
-  - [Explanation](#explanation)
-    - [Grids](#grids)
-    - [Animations](#animations)
-  - [How to contribute?](#how-to-contribute)
-
 ## Example
 
 ```go

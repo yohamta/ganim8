@@ -51,7 +51,7 @@ func (g *Game) Update() error {
 }
 ```
 
-You can see a more elaborated [examples](examples/demo/main.go).
+You can see a more elaborated [example](examples/demo/main.go).
 
 That demo transforms this spritesheet:
 

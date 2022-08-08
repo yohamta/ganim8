@@ -140,7 +140,7 @@ func TestUpdate(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			anim := ganim8.NewAnimation(mockSprite(4), tt.durations, ganim8.Nop)
-			anim.Update(tt.updateDuration)
+			anim.UpdateWithDelta(tt.updateDuration)
 			got := anim.Position()
 			if got != tt.want {
 				t.Errorf("%s: got %v; want %v", tt.name, got, tt.want)
@@ -171,7 +171,7 @@ func TestCallback(t *testing.T) {
 				func(anim *ganim8.Animation, loops int) {
 					got += loops
 				})
-			anim.Update(tt.arg)
+			anim.UpdateWithDelta(tt.arg)
 			if got != tt.want {
 				t.Errorf("%s: got %v; want %v", tt.name, got, tt.want)
 			}
@@ -195,7 +195,7 @@ func TestPause(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			anim := ganim8.NewAnimation(mockSprite(4), d(1), ganim8.Nop)
 			anim.Pause()
-			anim.Update(tt.arg)
+			anim.UpdateWithDelta(tt.arg)
 			got := anim.Position()
 			if got != tt.want {
 				t.Errorf("%s: got %v; want %v", tt.name, got, tt.want)
@@ -220,7 +220,7 @@ func TestResume(t *testing.T) {
 			anim := ganim8.NewAnimation(mockSprite(4), d(1), ganim8.Nop)
 			anim.Pause()
 			anim.Resume()
-			anim.Update(tt.arg)
+			anim.UpdateWithDelta(tt.arg)
 			got := anim.Position()
 			if got != tt.want {
 				t.Errorf("%s: got %v; want %v", tt.name, got, tt.want)
@@ -272,7 +272,7 @@ func TestPauseAtEnd(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			anim := ganim8.NewAnimation(mockSprite(4), d(1), ganim8.PauseAtEnd)
-			anim.Update(tt.arg)
+			anim.UpdateWithDelta(tt.arg)
 			got := anim.Position()
 			if got != tt.want {
 				t.Errorf("positon - %s: got %v; want %v", tt.name, got, tt.want)
@@ -300,7 +300,7 @@ func TestPauseAtStart(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			anim := ganim8.NewAnimation(mockSprite(4), d(1), ganim8.PauseAtStart)
-			anim.Update(tt.arg)
+			anim.UpdateWithDelta(tt.arg)
 			got := anim.Position()
 			if got != tt.want {
 				t.Errorf("positon - %s: got %v; want %v", tt.name, got, tt.want)

@@ -12,7 +12,6 @@ In order to build animations more easily, ganim8 divides the process in two step
 import "github.com/yohamta/ganim8/v2"
 
 type Game struct {
-  prevTime  time.Time
   animation *ganim8.Animation
 }
 
@@ -31,12 +30,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 }
 
 func (g *Game) Update() error {
-  now := time.Now()
-  delta := now.Sub(g.prevTime)
-
-  g.animation.Update(delta)
-  g.prevTime = now
-
+  g.animation.Update()
   return nil
 }
 ```
@@ -117,10 +111,14 @@ string 'pauseAtEnd'. It will make the animation loop once and then pause and sto
 Animations have the following methods:
 
 ```go
-animation.Update(dt)
+animation.Update()
 ```
 
 Use this inside `Game.Update()` so that your animation changes frames according to the time that has passed.
+
+It assumes that the time delta is 1/60[s] (1/TPS to be exact).
+For more details about TPS (ticks per seconds) in Ebitengin is explained [here](https://github.com/tinne26/tps-vs-fps) that is written by [tinne26](https://github.com/tinne26).
+
 
 ```go
 animation.Draw(screen, ganim8.DrawOpts(x,y, angle, sx, sy, ox, oy))

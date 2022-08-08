@@ -4,12 +4,12 @@ Animation library for [Ebitengin](https://ebiten.org/) inspired by [anim8](https
 
 In order to build animations more easily, ganim8 divides the process in two steps: first you create a grid, which is capable of creating frames (Quads) easily and quickly. Then you use the grid to create one or more animations.
 
-[GoDoc](https://pkg.go.dev/github.com/yohamta/ganim8/v2)
+[GoDoc](https://pkg.go.dev/github.com/yohamta/ganim8/v3)
 
 ## Example
 
 ```go
-import "github.com/yohamta/ganim8/v2"
+import "github.com/yohamta/ganim8/v3"
 
 type Game struct {
   animation *ganim8.Animation

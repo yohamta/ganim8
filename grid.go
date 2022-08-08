@@ -39,6 +39,7 @@ type Grid struct {
 	imageWidth, imageHeight int
 	left, top               int
 	width, height           int
+	border                  int
 	key                     string
 }
 
@@ -62,8 +63,11 @@ func NewGrid(frameWidth, frameHeight, imageWidth, imageHeight int, args ...int) 
 	assertSize(frameWidth, imageWidth, "frameWidth")
 	assertSize(frameHeight, imageHeight, "frameHeight")
 
-	left, top := 0, 0
+	left, top, border := 0, 0, 0
 	switch len(args) {
+	case 3:
+		border = args[2]
+		fallthrough
 	case 2:
 		top = args[1]
 		fallthrough
@@ -80,6 +84,7 @@ func NewGrid(frameWidth, frameHeight, imageWidth, imageHeight int, args ...int) 
 		top:         top,
 		width:       imageWidth / frameWidth,
 		height:      imageHeight / frameHeight,
+		border:      border,
 	}
 
 	g.key = getGridKey(g.frameWidth, g.frameHeight, g.imageWidth,
@@ -101,7 +106,7 @@ func getGridKey(args ...int) string {
 
 func (g *Grid) createFrame(x, y int) *image.Rectangle {
 	fw, fh := g.frameWidth, g.frameHeight
-	x0, y0 := g.left+(x-1)*fw, g.top+(y-1)*fh
+	x0, y0 := g.left+(x-1)*fw+x*g.border, g.top+(y-1)*fh+y*g.border
 	r := image.Rect(x0, y0, x0+fw, y0+fh)
 	return &r
 }

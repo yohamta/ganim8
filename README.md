@@ -51,7 +51,7 @@ Into several animated objects:
 
 ### Grids
 
-Grids have only one purpose: To build groups of quads of the same size as easily as possible. In order to do this, they need to know only 2 things: the size of each quad and the size of the image they will be applied to. Each size is a width and a height, and those are the first 4 parameters of @anim8.newGrid@.
+Grids have only one purpose: To build groups of quads of the same size as easily as possible. In order to do this, they need to know only 2 things: the size of each quad and the size of the image they will be applied to. Each size is a width and a height, and those are the first 4 parameters of @ganim8.NewGrid@.
 
 Grids are just a convenient way of getting frames from a sprite. Frames are assumed to be distributed in rows and columns. Frame 1,1 is the one in the first row, first column.
 
@@ -101,7 +101,7 @@ frames := gs.Frames("1-7",1, "6-2",1)
 Animations are groups of frames that are interchanged every now and then.
 
 ```go
-animation := anim8.New(img, frames, durations, onLoop)
+animation := ganim8.New(img, frames, durations, onLoop)
 ```
 
 * `img` is an image object to use for the animation.

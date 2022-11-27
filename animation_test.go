@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/hajimehoshi/ebiten/v2"
-	"github.com/yohamta/ganim8/v3"
+	"github.com/yohamta/ganim8/v2"
 )
 
 var mockImg = ebiten.NewImage(1, 1)

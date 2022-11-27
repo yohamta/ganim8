@@ -136,9 +136,11 @@ func (spr *Sprite) Draw(screen *ebiten.Image, index int, opts *DrawOptions) {
 
 	if spr.flippedH {
 		sx = sx * -1
+		ox = 1 - ox
 	}
 	if spr.flippedV {
 		sy = sy * -1
+		oy = 1 - oy
 	}
 
 	if sx != 1 || sy != 1 {

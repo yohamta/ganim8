@@ -50,6 +50,20 @@ func TestWith2Integers(t *testing.T) {
 	}
 }
 
+func TestWithFloat64(t *testing.T) {
+	grid := ganim8.NewGrid(16, 16, 64, 64)
+
+	nr := func(x, y int) *image.Rectangle {
+		r := image.Rect(x, y, x+16, y+16)
+		return &r
+	}
+
+	got := _TestGetFrames(grid, []interface{}{1.2, 1.3})
+	if assertEqualRects(got, []*image.Rectangle{nr(0, 0)}) == false {
+		t.Errorf("got %v; want %v", got, []*image.Rectangle{nr(0, 0)})
+	}
+}
+
 func TestWithSeveralPairsOfIntegers(t *testing.T) {
 	grid := ganim8.NewGrid(16, 16, 64, 64)
 	gridWithOffesets := ganim8.NewGrid(16, 16, 64, 64, 10, 20)

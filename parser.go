@@ -11,6 +11,8 @@ func parseInterval(val interface{}) (int, int, int) {
 	switch v := val.(type) {
 	case int:
 		return v, v, 1
+	case float64:
+		return int(v), int(v), 1
 	case string:
 		if n, err := strconv.Atoi(v); err == nil {
 			return n, n, 1

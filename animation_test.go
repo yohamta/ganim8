@@ -1,6 +1,7 @@
 package ganim8_test
 
 import (
+	"fmt"
 	"image"
 	"testing"
 	"time"
@@ -40,18 +41,28 @@ func assertEqualDurations(a, b []time.Duration) bool {
 
 func TestParsingDuration(t *testing.T) {
 	var tests = []struct {
-		name string
-		args time.Duration
+		args []interface{}
 		want []time.Duration
 	}{
-		{"reads a simple array", 3, []time.Duration{3, 3, 3, 3}},
+		{
+			args: []interface{}{time.Duration(3)},
+			want: []time.Duration{3},
+		},
+		{
+			args: []interface{}{int(3)},
+			want: []time.Duration{time.Millisecond * 3},
+		},
+		{
+			args: []interface{}{float64(3.0)},
+			want: []time.Duration{time.Millisecond * 3},
+		},
 	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			anim := ganim8.NewAnimation(mockSprite(4), tt.args, ganim8.Nop)
+	for i, tt := range tests {
+		t.Run(fmt.Sprintf("testing-%d", i), func(t *testing.T) {
+			anim := ganim8.NewAnimation(mockSprite(1), tt.args, ganim8.Nop)
 			got := anim.Durations()
 			if assertEqualDurations(got, tt.want) == false {
-				t.Errorf("%s: got %v; want %v", tt.name, got, tt.want)
+				t.Errorf("got %v; want %v", got, tt.want)
 			}
 		})
 	}

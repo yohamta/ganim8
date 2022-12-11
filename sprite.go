@@ -202,3 +202,10 @@ func (spr *Sprite) DrawWithShader(screen *ebiten.Image, index int, opts *DrawOpt
 	op.Images[3] = shaderOpts.Images[2]
 	screen.DrawRectShader(int(w), int(h), shaderOpts.Shader, op)
 }
+
+func (spr *Sprite) Clone() *Sprite {
+	s := *spr
+	s.op = &ebiten.DrawImageOptions{}
+	s.shaderOp = &ebiten.DrawRectShaderOptions{}
+	return &s
+}

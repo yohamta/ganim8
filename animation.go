@@ -30,6 +30,10 @@ func parseDurations(durations interface{}, frameCount int) []time.Duration {
 		for i := range val {
 			result[i] = val[i]
 		}
+	case []interface{}:
+		for i := range val {
+			result[i] = parseDurationValue(val[i])
+		}
 	case map[string]time.Duration:
 		for key, duration := range val {
 			min, max, step := parseInterval(key)
@@ -37,10 +41,35 @@ func parseDurations(durations interface{}, frameCount int) []time.Duration {
 				result[i-1] = duration
 			}
 		}
+	case map[string]interface{}:
+		for key, duration := range val {
+			min, max, step := parseInterval(key)
+			for i := min; i <= max; i += step {
+				result[i-1] = parseDurationValue(duration)
+			}
+		}
+	case interface{}:
+		for i := 0; i < frameCount; i++ {
+			result[i] = parseDurationValue(val)
+		}
 	default:
-		log.Fatal(fmt.Sprintf("durations must be time.Duration or []time.Duration or map[string]time.Duration. was %v", durations))
+		log.Fatal(fmt.Sprintf("failed to parse durations: type=%T val=%+v", durations, durations))
 	}
 	return result
+}
+
+func parseDurationValue(value interface{}) time.Duration {
+	switch val := value.(type) {
+	case time.Duration:
+		return val
+	case int:
+		return time.Millisecond * time.Duration(val)
+	case float64:
+		return time.Millisecond * time.Duration(val)
+	default:
+		log.Fatal(fmt.Sprintf("failed to parse duration value: %+v", value))
+	}
+	return 0
 }
 
 func parseIntervals(durations []time.Duration) ([]time.Duration, time.Duration) {

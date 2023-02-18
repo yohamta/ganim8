@@ -91,7 +91,7 @@ If you make its grid start on its first frame (using `left` and `top`), you can 
                   // frame, image,     offsets, border
 gs := ganim8.NewGrid(32,98, 1024,768,  366,102,   1)
 
-frames := gs.Frames("1-7",1)
+frames := gs.Framees("1-7",1)
 ```
 However that way you will get a submarine which "emerges", then "suddenly disappears", and emerges again. To make it look more natural, you must add some animation frames "backwards", to give the illusion
 of "submersion". Here's the complete list:

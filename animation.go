@@ -183,6 +183,11 @@ func (anim *Animation) Clone() *Animation {
 	return &new
 }
 
+// SetOnLoop sets the callback function which representing
+func (anim *Animation) SetOnLoop(onLoop OnLoop) {
+	anim.onLoop = onLoop
+}
+
 func seekFrameIndex(intervals []time.Duration, timer time.Duration) int {
 	high, low, i := len(intervals)-2, 0, 0
 	for low <= high {

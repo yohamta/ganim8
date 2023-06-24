@@ -188,6 +188,13 @@ func (anim *Animation) SetOnLoop(onLoop OnLoop) {
 	anim.onLoop = onLoop
 }
 
+func (anim *Animation) IsEnd() bool {
+	if anim.status == Paused && anim.position == anim.sprite.length-1 {
+		return true
+	}
+	return false
+}
+
 func seekFrameIndex(intervals []time.Duration, timer time.Duration) int {
 	high, low, i := len(intervals)-2, 0, 0
 	for low <= high {

@@ -41,7 +41,7 @@ func (g *Game) Update() error {
 	g.plane.Update()
 	g.seaplane.Update()
 	g.submarine.Update()
-	g.seaplaneAngle += g.seaplaneAngle + 10*math.Pi/180
+	g.seaplaneAngle += 10 * math.Pi / 180
 
 	return nil
 }
@@ -55,7 +55,7 @@ func (g *Game) Draw(screen *ebiten.Image) {
 		// ganim8.DrawAnime(screen, a, float64(i)*75, float64(i)*50, 0, 1, 1, .5, .5)
 	}
 	g.plane.Draw(screen, ganim8.DrawOpts(100, 400))
-	g.seaplane.Draw(screen, ganim8.DrawOpts(250, 432, g.seaplaneAngle, 1, 1, 32, 32))
+	g.seaplane.Draw(screen, ganim8.DrawOpts(250, 432, g.seaplaneAngle, 1, 1, 0.5, 0.5))
 	g.submarine.Draw(screen, ganim8.DrawOpts(600, 100))
 }
 

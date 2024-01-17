@@ -1,13 +1,13 @@
 # ganim8
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/yohamta/ganim8/v2.svg)](https://pkg.go.dev/github.com/yohamta/ganim8/v2)
+
 Sprite Animation library for [Ebitengine](https://ebiten.org/) inspired by [anim8](https://github.com/kikito/anim8).
 
 v1.x is pretty much the same API with [anim8](https://github.com/kikito/anim8).
-v2.x is more optimized for Ebiten to be more performant and glanular control introducing [Sprite](https://pkg.go.dev/github.com/yohamta/ganim8/v2#Sprite) API.
+v2.x is more optimized for Ebiten to be more performant and granular control introducing [Sprite](https://pkg.go.dev/github.com/yohamta/ganim8/v2#Sprite) API.
 
 In order to build animations more easily, ganim8 divides the process in two steps: first you create a grid, which is capable of creating frames (Quads) easily and quickly. Then you use the grid to create one or more animations.
-
-[GoDoc](https://pkg.go.dev/github.com/yohamta/ganim8/v2)
 
 ## Example
 

@@ -101,12 +101,12 @@ func (spr *Sprite) IsEnd(index int) bool {
 	return index >= spr.length-1
 }
 
-// FlipH flips the animation horizontally.
+// FlipH flips the sprite horizontally.
 func (spr *Sprite) FlipH() {
 	spr.flippedH = !spr.flippedH
 }
 
-// FlipV flips the animation horizontally.
+// FlipV flips the sprite vertically.
 func (spr *Sprite) FlipV() {
 	spr.flippedV = !spr.flippedV
 }
